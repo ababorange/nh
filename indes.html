@@ -18,13 +18,36 @@
       </p>
 
       <p>
-        <a
-          href="https://gips3.baidu.com/it/u=904627811,1791881722&fm=3028&app=3028&size=w931&q=100&n=0&f=PNG&fmt=auto&maxorilen2heic=2000000"
-          download
-        >
-          如果喜欢，可以下载头像
-        </a>
+        <button onclick="downloadAvatar()">如果喜欢，可以下载头像</button>
       </p>
+
+      <script>
+        async function downloadAvatar() {
+          try {
+            // 替换为你的跨域图片地址
+            const imgUrl =
+              "https://gips3.baidu.com/it/u=904627811,1791881722&fm=3028&app=3028&size=w931&q=100&n=0&f=PNG&fmt=auto&maxorilen=2&heic=2000000";
+            const response = await fetch(imgUrl);
+
+            if (!response.ok) throw new Error("图片请求失败");
+
+            // 将图片转为Blob对象
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+
+            // 创建临时下载链接并触发下载
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "orange的头像.png"; // 自定义下载文件名
+            a.click();
+
+            // 清理临时资源
+            URL.revokeObjectURL(url);
+          } catch (error) {
+            alert("下载失败：" + error.message);
+          }
+        }
+      </script>
     </div>
 
     <div
